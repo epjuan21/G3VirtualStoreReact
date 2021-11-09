@@ -3,6 +3,7 @@ const routerApi = require('./routes');
 const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
+const connectDB = require('./db/database');
 require('dotenv').config()
 
 const app = express();
@@ -23,7 +24,8 @@ const options = {
 }
 
 // Database
-const { mongoose } = require('./db/database');
+const url = process.env.DB_STRING;
+connectDB(url)
 
 // Middlewares
 app.use(cors(options));

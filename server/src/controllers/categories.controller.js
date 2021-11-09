@@ -20,7 +20,7 @@ exports.insertCategory = async function (req, res, next) {
         if (error) {
             return next(error)
         } else {
-            res.json(data)
+            res.status(201).json(data)
         }
     })
 }
@@ -35,7 +35,7 @@ exports.updateCategory = async function (req, res, next) {
             if (error) {
                 return next(error)
             } else {
-                res.json(data)
+                res.status(201).json(data)
             }
         }
     )
