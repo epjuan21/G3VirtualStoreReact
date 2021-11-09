@@ -9,7 +9,7 @@ const user = {
                 .then((data) => res.json(data))
                 .catch((error) => res.json({ message: error }))
         } catch (error) {   
-            return res.json({ message: error })
+            return res.status(404).json({ message: error })
         }
     }
 }

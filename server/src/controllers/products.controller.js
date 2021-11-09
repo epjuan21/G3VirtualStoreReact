@@ -6,6 +6,6 @@ exports.find = async function (req, res) {
         const products = await Products.find();
         res.json(products)
     } catch (error) {
-        res.json({ message: err })
+        res.status(400).json({ message: err })
     }
 }
