@@ -5,50 +5,57 @@ const mongoose = require('mongoose');
 const parseId = id => mongoose.Types.ObjectId(id)
 
 // Get all Categories
-exports.find = async function (req, res) {
+exports.getCategories = async (req, res) => {
     try {
         const categories = await Categories.find();
-        res.json(categories)
+        res.status(200).json(categories)
     } catch (error) {
-        res.status(404).json({message: error.messager})
+        res.status(404).json({ message: error })
     }
 }
 
-// Insert Category
-exports.insertCategory = async function (req, res, next) {
-    Categories.create(req.body, (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.status(201).json(data)
-        }
-    })
+// Get Category By Id
+exports.getCategoryById = async (req, res) => {
+    try {
+        const category = await Categories.findById(req.params.id)
+        res.status(200).json(category)
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
+// Add Category
+exports.addCategory = async(req, res) => {
+    try {
+        const { title, name, slug, description, imageUrl} = req.body;
+        const newCategory = new Categories({title, name, slug, description, imageUrl})
+        await newCategory.save()
+        res.status(201).json(newCategory)
+    } catch (error) {
+        res.status(404).json({ message: error })   
+    }   
 }
 
 // Update Category
-exports.updateCategory = async function (req, res, next) {
-    const { id } = req.params
-    const body = req.body
-    await Categories.findByIdAndUpdate( parseId(id), {
-        $set: body
-        }, (error, data) => {
-            if (error) {
-                return next(error)
-            } else {
-                res.status(201).json(data)
-            }
-        }
-    )
+exports.updateCategory = async(req, res) => {
+    try {
+        const { title, name, slug, description, imageUrl } = req.body;
+        const category = await Categories.findByIdAndUpdate(req.params.id, {
+            title, name, slug, description, imageUrl
+        }, { new: true });
+        res.status(200).json(category)
+    } catch (error) {
+        res.status(404).json({ message: error }) 
+    }
 }
 
 // Delete Category
-exports.deleteCategory = async function (req, res) {
-    const { id } = req.params
-    await Categories.findByIdAndRemove({ _id: parseId(id)},
-        (err, items) => {
-            res.json({
-                items
-            })
-        }
-    )
+exports.deleteCategory = async(req, res) => {
+    try {
+        const { id } = req.params
+        await Categories.findByIdAndRemove({ _id: parseId(id)})
+        res.status(200).json("Categoria Eliminada")
+    } catch (error) {
+        res.status(404).json({ message: error }) 
+    }
 }

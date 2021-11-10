@@ -10,6 +10,7 @@ exports.getProducts = async (req, res) => {
     }
 }
 
+// Return Product By Id
 exports.getProductById = async (req, res) => {
     try {
         const product = await Products.findById(req.params.id)
@@ -19,6 +20,7 @@ exports.getProductById = async (req, res) => {
     }
 }
 
+// Add Product
 exports.addProduct = async(req, res) => {
     try {
         const { name, price, description, imageUrl, category_id} = req.body;
@@ -30,18 +32,20 @@ exports.addProduct = async(req, res) => {
     }   
 }
 
+// Update Product
 exports.updateProduct = async(req, res) => {
     try {
         const { name, price, description, imageUrl, category_id } = req.body;
         const product = await Products.findByIdAndUpdate(req.params.id, {
             name, price, description, imageUrl, category_id
-        });
+        }, { new: true });
         res.status(200).json(product)
     } catch (error) {
         res.status(404).json({ message: error }) 
     }
 }
 
+// Delete Product
 exports.deleteProduct = async(req, res) => {
     try {
         await Products.findByIdAndDelete(req.params.id)
