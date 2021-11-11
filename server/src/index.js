@@ -4,9 +4,11 @@ const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./db/database');
+const createRoles = require('./lib/initialSetup');
 require('dotenv').config()
 
 const app = express();
+createRoles();
 
 // Settings
 const port = process.env.PORT || 3000;
