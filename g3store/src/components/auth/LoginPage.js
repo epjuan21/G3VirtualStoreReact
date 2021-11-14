@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import routes from '../../helpers/routes'
 
-export const LoginScreen = () => {
+export const LoginPage = () => {
+
     return (
         <>
             <div className="container-fluid">
@@ -11,7 +13,7 @@ export const LoginScreen = () => {
 
                         <form>
                             <div className="col mb-3 ">
-                                <label forHtml="inputUser" className="form-label">Usuario</label>
+                                <label forhtml="inputUser" className="form-label">Usuario</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -19,7 +21,7 @@ export const LoginScreen = () => {
                                 />
                             </div>
                             <div className="col mb-3">
-                                <label forHtml="inputPassword" className="form-label">Contraseña</label>
+                                <label forhtml="inputPassword" className="form-label">Contraseña</label>
                                 <input
                                     type="password"
                                     className="form-control"
@@ -27,15 +29,20 @@ export const LoginScreen = () => {
                                 />
                             </div>
                             <div className="col-12">
-                                <button className="btn btn-primary" type="submit">
-                                    <span
-                                        role="status"
-                                        aria-hidden="true"
-                                    >Iniciar Sesión</span>
+                                <button 
+                                    className="btn btn-primary" 
+                                    type="submit"
+                                    >
+                                        <span
+                                            role="status"
+                                            aria-hidden="true"
+                                        >
+                                        Iniciar Sesión
+                                        </span>
                                 </button>
                                 <Link 
                                     className="btn btn-link" 
-                                    to="/auth/register"
+                                    to={routes.auth.register}
                                 >
                                     Registrarse
                                 </Link>

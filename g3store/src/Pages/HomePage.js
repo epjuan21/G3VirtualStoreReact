@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const HomeScreen = () => {
+export const HomePage = () => {
     return (
         <>
 
@@ -143,7 +143,7 @@ export const HomeScreen = () => {
                     </div>
                     <div className="mb-3 form-check">
                         <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" for="exampleCheck1">
+                        <label className="form-check-label" forhtml="exampleCheck1">
                             En cumplimiento de la Constitución Política Nacional, Ley 1581 de
                             2012 y el decreto 1377 de 2013, es responsable del tratamiento de
                             sus datos personales. ¿Autoriza a G3 Virtual Store al manejo de sus

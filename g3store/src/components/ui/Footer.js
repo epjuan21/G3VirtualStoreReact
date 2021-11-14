@@ -5,6 +5,7 @@ import twitter from '../../assets/img/social/twitter.png'
 import facebook from '../../assets/img/social/facebook.png'
 import instagram from '../../assets/img/social/instagram.png'
 import youtube from '../../assets/img/social/youtube.png'
+import routes from '../../helpers/routes'
 
 export const Footer = () => {
   return (
@@ -13,17 +14,17 @@ export const Footer = () => {
     <div className="container">
       <footer className="row pt-5 my-t">
         <div className=" col col-lg-4 col-md-12 col-sm-12">
-          <a href="/" className="d-flex align-items-center mb-3 link-dark text-decoration-none">
+          <Link to={routes.home} className="d-flex align-items-center mb-3 link-dark text-decoration-none">
             <img src={logo} width="256" alt="" />
-          </a>
+          </Link>
         </div>
 
         <div className="col col-lg-4 col-md-6 col-sm-12 mb-sm-3 mb-md-0">
           <h5>Navegación</h5>
           <ul className="nav flex-column">
-            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to="/">Inicio</Link></li>
-            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to="/equipo">Quiénes somos</Link></li>
-            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to="/contacto">Concacto</Link></li>
+            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to={routes.home}>Inicio</Link></li>
+            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to={routes.equipo}>Quiénes somos</Link></li>
+            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to={routes.contacto}>Concacto</Link></li>
 
           </ul>
         </div>
@@ -31,9 +32,9 @@ export const Footer = () => {
         <div className="col col-lg-4 col-md-6 col-sm-12 mb-sm-3 mb-md-0">
           <h5>Productos y Servicios</h5>
           <ul className="nav flex-column">
-            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to="/gestion-peajes">Gestión de Peajes</Link></li>
-            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to="/gestion-transporte">Gestión de Transporte</Link></li>
-            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to="/software-factory">Software Factory</Link></li>
+            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to={routes.gestionpeajes}>Gestión de Peajes</Link></li>
+            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to={routes.gestiontransporte}>Gestión de Transporte</Link></li>
+            <li className="nav-item mb-2"><Link className="nav-link p-0 text-muted" to={routes.softwarefactory}>Software Factory</Link></li>
           </ul>
         </div>
 

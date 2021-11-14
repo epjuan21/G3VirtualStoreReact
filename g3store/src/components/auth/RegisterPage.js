@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const RegisterScreen = () => {
+export const RegisterPage = () => {
     return (
         <>
             <div className="container-fluid">
@@ -11,7 +11,7 @@ export const RegisterScreen = () => {
 
                         <form>
                             <div className="col mb-3">
-                                <label forHtml="inputUser" className="form-label">Usuario</label>
+                                <label forhtml="inputUser" className="form-label">Usuario</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -19,7 +19,7 @@ export const RegisterScreen = () => {
                                 />
                             </div>
                             <div className="col mb-3">
-                                <label forHtml="inputEmail" className="form-label">Correo</label>
+                                <label forhtml="inputEmail" className="form-label">Correo</label>
                                 <input
                                     type="email"
                                     className="form-control"
@@ -27,7 +27,7 @@ export const RegisterScreen = () => {
                                 />
                             </div>
                             <div className="col mb-3">
-                                <label forHtml="inputPassword" className="form-label">Contraseña</label>
+                                <label forhtml="inputPassword" className="form-label">Contraseña</label>
                                 <input
                                     type="password"
                                     className="form-control"
@@ -42,7 +42,7 @@ export const RegisterScreen = () => {
                                     >Registrarse</span>
                                 </button>
                                 <Link
-                                    class="btn btn-link"
+                                    className="btn btn-link"
                                     to="/auth/login"
                                 >
                                     Iniciar Sesión

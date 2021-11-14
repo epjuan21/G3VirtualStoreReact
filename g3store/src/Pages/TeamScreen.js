@@ -93,8 +93,8 @@ export const TeamScreen = () => {
                         </p>
                     </div>
 
-                    <div class="col-lg-4">
-                        <img src={ AlbertoDuque } class="rounded" alt="Alberto Duque" />
+                    <div className="col-lg-4">
+                        <img src={ AlbertoDuque } className="rounded" alt="Alberto Duque" />
 
                         <h5>Alberto Duque Villegas</h5>
                         <p>

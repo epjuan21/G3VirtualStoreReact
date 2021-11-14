@@ -1,15 +1,17 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
-import { LoginScreen } from '../components/auth/LoginScreen'
-import { RegisterScreen } from '../components/auth/RegisterScreen'
+import { Switch, Route } from 'react-router-dom'
+import { LoginPage } from '../components/auth/LoginPage'
+import { RegisterPage } from '../components/auth/RegisterPage'
+import routes from '../helpers/routes'
+import { NotFoundPage } from '../Pages/NotFoundPage'
 
 export const AuthRouter = () => {
     return (
         <div>
             <Switch>
-                <Route exact path="/auth/login" component={ LoginScreen } />
-                <Route exact path="/auth/register" component={ RegisterScreen } />
-                <Redirect to="/auth/login" />
+                <Route exact path={routes.auth.login} component={ LoginPage } />
+                <Route exact path={routes.auth.register} component={ RegisterPage } />
+                <Route path="*" component={ NotFoundPage } />
             </Switch>
         </div>
     )
