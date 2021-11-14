@@ -1,6 +1,5 @@
 const express = require('express');
 const routerApi = require('./routes');
-const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./db/database');
@@ -37,9 +36,6 @@ app.use(express.urlencoded({extended: false}))
 
 // Routes
 routerApi(app);
-
-// Static Files
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Server
 app.listen(port, () => {

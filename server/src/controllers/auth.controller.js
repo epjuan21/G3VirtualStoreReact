@@ -2,7 +2,6 @@ const User = require('../models/users.model');
 const Role = require('../models/roles.model');
 const jwt = require('jsonwebtoken');
 
-
 exports.register = async (req, res) => {
 
     const { name, email, password, roles } = req.body;
@@ -23,31 +22,33 @@ exports.register = async (req, res) => {
     }
 
     const savedUser = await newUser.save()
-    console.log(savedUser);
 
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
         expiresIn: 86400 // 24 Horass
     })
 
     res.status(200).json({token})
-
 }
 
 exports.login = async (req, res) => {
    
-    const userFound = await User.findOne({email: req.body.email}).populate('roles');
-
-    if (!userFound) return res.status(400).json({message: 'User Not Found'})
-
-    const matchPassword = await User.comparePassword(req.body.password, userFound.password)
-
-    if (!matchPassword) return res.status(401).json({token: null, message: 'Invalid Password'})
-
-    const token = jwt.sign({id: userFound._id}, process.env.JWT_SECRET, {
-        expiresIn: 86400 // 24 Horass
-    })
-
-    res.json({token})
+    try {
+        const userFound = await User.findOne({email: req.body.email}).populate('roles');
+    
+        if (!userFound) return res.status(400).json({message: 'User Not Found'})
+    
+        const matchPassword = await User.comparePassword(req.body.password, userFound.password)
+    
+        if (!matchPassword) return res.status(401).json({token: null, message: 'Invalid Password'})
+    
+        const token = jwt.sign({id: userFound._id}, process.env.JWT_SECRET, {
+            expiresIn: 86400 // 24 Horass
+        })
+        res.json({token})
+    } 
+    catch (error) {
+        res.status(404).json(error)
+    }
 
 }
 

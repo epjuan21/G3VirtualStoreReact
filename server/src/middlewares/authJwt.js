@@ -3,13 +3,11 @@ const Users = require('../models/users.model');
 const Role = require('../models/roles.model');
 
 exports.verifyToken = async  (req, res, next) => {
-
     try {
         const token = req.headers["x-access-token"]
         if (!token) return res.status(403).json({message: "No token provided"});
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.userId = decoded.id;
-        const user = await Users.findById(decoded.id, {password: 0}); // password: 0 es una proyeccion de Mongo que significa que le password no se obtene o no se muestra en el resultado
+        const { id } = jwt.verify(token, process.env.JWT_SECRET)
+        const user = await Users.findById(id, {password: 0}); // password: 0 es una proyeccion de Mongo que significa que le password no se obtene o no se muestra en el resultado
         if(!user) return res.status(404).json({message: "No user found"});
         next()
     } catch (error) {
