@@ -12,6 +12,10 @@ exports.register = async (req, res) => {
         password:  await User.encryptPassword(password)
     })
 
+    // Verificar si el Usuario Existe
+    const userExists = await User.findOne({email});
+    if (userExists) return res.status(400).json({message: 'El usuario ya existe'})
+ 
     // Roles
     if(roles) {
         const foundRoles = await Role.find({name: {$in: roles}})
