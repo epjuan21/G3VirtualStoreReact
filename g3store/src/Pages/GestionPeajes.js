@@ -50,22 +50,22 @@ export const GestionPeajes = () => {
                         {/* <!-- Productos--> */}
 
                         <div
-                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-4">
-                            <div class="card_container">
-                                <div class="card_image">
+                            className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-4">
+                            <div className="card_container">
+                                <div className="card_image">
                                     <img
                                         src={ BackOffice } alt="Prueba" />
                                 </div>
-                                <div class="card_title">
+                                <div className="card_title">
                                     Product Name
                                 </div>
-                                <div class="card_text">
+                                <div className="card_text">
                                     <p>Product Description</p>
                                 </div>
-                                <div class="card_footer">
-                                    <div class="card_price">Product Price</div>
+                                <div className="card_footer">
+                                    <div className="card_price">Product Price</div>
                                     <div>
-                                        <button class="btn btn-primary btn-sm">Agregar</button>
+                                        <button className="btn btn-primary btn-sm">Agregar</button>
                                     </div>
                                 </div>
                             </div>
