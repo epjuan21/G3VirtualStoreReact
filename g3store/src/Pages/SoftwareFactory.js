@@ -13,8 +13,6 @@ export const SoftwareFactory = () => {
         setProduct(data)
     }
 
-    console.log(product)
-
     useEffect(() => {
         getProducts();
     }, [])

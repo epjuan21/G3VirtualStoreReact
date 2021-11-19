@@ -13,8 +13,6 @@ export const GestionPeajes = () => {
         setProduct(data)
     }
 
-    console.log(product)
-
     useEffect(() => {
         getProducts();
     }, [])
