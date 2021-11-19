@@ -4,13 +4,14 @@ const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./db/database');
 const createRoles = require('./lib/initialSetup');
-require('dotenv').config()
+const dotenv = require('dotenv');
 
 const app = express();
 createRoles();
 
 // Settings
 const port = process.env.PORT || 3000;
+dotenv.config();
 
 // Cors
 const whitelist = ['http://localhost:3000','http://localhost:3001']
@@ -25,8 +26,7 @@ const options = {
 }
 
 // Database
-const url = process.env.DB_STRING;
-connectDB(url)
+connectDB();
 
 // Middlewares
 app.use(cors(options));
