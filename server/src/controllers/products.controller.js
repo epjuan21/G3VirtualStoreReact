@@ -20,6 +20,16 @@ exports.getProductById = async (req, res) => {
     }
 }
 
+// Return Products By Category Id
+exports.getProductByCategory = async (req, res) => {
+    try {
+        const products = await Products.find({category_id: req.params.categoryId})
+        res.status(200).json(products)
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
 // Add Product
 exports.addProduct = async(req, res) => {
     try {
