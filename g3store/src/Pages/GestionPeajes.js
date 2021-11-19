@@ -1,8 +1,24 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import GestionPeajesCover from '../assets/img/covers/GestionPeajesCover.png'
-import BackOffice from '../assets/img/gestionpeajes/BackOffice.png'
+import { ProductCard } from '../components/ui/ProductCard'
 
 export const GestionPeajes = () => {
+
+    const [product, setProduct] = useState([])
+    axios.defaults.baseURL = 'http://localhost:3000/api/v1';
+
+    const getProducts = async() => {
+        const { data } = await axios.get('/products/category/617dc87c64369afd31bae7ff');
+        setProduct(data)
+    }
+
+    console.log(product)
+
+    useEffect(() => {
+        getProducts();
+    }, [])
+
     return (
         <>
             <div>
@@ -46,31 +62,17 @@ export const GestionPeajes = () => {
 
                 <div className="container">
                     <div className="row">
-
-                        {/* <!-- Productos--> */}
-
-                        <div
-                            className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-4">
-                            <div className="card_container">
-                                <div className="card_image">
-                                    <img
-                                        src={ BackOffice } alt="Prueba" />
-                                </div>
-                                <div className="card_title">
-                                    Product Name
-                                </div>
-                                <div className="card_text">
-                                    <p>Product Description</p>
-                                </div>
-                                <div className="card_footer">
-                                    <div className="card_price">Product Price</div>
-                                    <div>
-                                        <button className="btn btn-primary btn-sm">Agregar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    {
+                            product.map((product) => (
+                                <ProductCard
+                                    key={product._id} 
+                                    imageUrl={product.imageUrl} 
+                                    name={product.name} 
+                                    description={product.description} 
+                                    price={product.price} 
+                                />
+                            ))
+                        }
                     </div>
                 </div>
 
