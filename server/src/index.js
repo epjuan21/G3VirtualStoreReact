@@ -13,7 +13,7 @@ createRoles();
 const port = process.env.PORT || 3000;
 
 // Cors
-const whitelist = ['http://localhost:3000']
+const whitelist = ['http://localhost:3000','http://localhost:3001']
 const options = {
     origin: (origin, callback) => {
         if ( whitelist.includes(origin) || !origin ) {
