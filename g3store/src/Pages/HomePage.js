@@ -2,6 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const HomePage = () => {
+
+    // useEffect(() => {
+    //     const userInfo = localStorage.getItem("userInfo")
+    //     if (userInfo) history.push(routes.account)
+    // }, [history])
+
     return (
         <>
 
