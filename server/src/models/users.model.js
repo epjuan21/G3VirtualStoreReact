@@ -30,7 +30,9 @@ const userSchema = new Schema({
     }
 );
 
-userSchema.pre('save', async(next) => {
+// Encriptar password antes de guardar
+userSchema.pre('save', async function (next) {
+    
     if(!this.isModified('password')) {
         next();
     }
@@ -38,6 +40,7 @@ userSchema.pre('save', async(next) => {
     this.password = await bcrypt.hash(this.password, salt)
 })
 
+// Comparar password del request con el de la base de datos
 userSchema.statics.comparePassword = async(password, recievedPassword) => {
 
     return await bcrypt.compare(password, recievedPassword)
