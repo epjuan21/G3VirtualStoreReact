@@ -6,11 +6,7 @@ exports.register = async (req, res) => {
 
     const { name, email, password, roles } = req.body;
    
-    const newUser = new User({
-        name,
-        email,
-        password:  await User.encryptPassword(password)
-    })
+    const newUser = new User({ name, email, password })
 
     // Verificar si el Usuario Existe
     const userExists = await User.findOne({email});
@@ -25,13 +21,15 @@ exports.register = async (req, res) => {
         newUser.roles= [role._id];
     }
 
-    const savedUser = await newUser.save()
-
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
-        expiresIn: 86400 // 24 Horass
-    })
-
-    res.status(200).json({token})
+    try {
+        const savedUser = await newUser.save()
+        res.status(201).json({
+            name: name,
+            email: email
+        })
+    } catch (error) {
+        res.status(400).json(error)
+    }
 }
 
 exports.login = async (req, res) => {

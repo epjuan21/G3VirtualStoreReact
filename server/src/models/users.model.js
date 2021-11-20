@@ -30,10 +30,13 @@ const userSchema = new Schema({
     }
 );
 
-userSchema.statics.encryptPassword = async(password) => {
+userSchema.pre('save', async(next) => {
+    if(!this.isModified('password')) {
+        next();
+    }
     const salt = await bcrypt.genSalt(10)
-    return await bcrypt.hash(password, salt)
-}   
+    this.password = await bcrypt.hash(this.password, salt)
+})
 
 userSchema.statics.comparePassword = async(password, recievedPassword) => {
 
