@@ -1,6 +1,6 @@
 const User = require('../models/users.model');
 const Role = require('../models/roles.model');
-const jwt = require('jsonwebtoken');
+const generateToken = require('../lib/generateToken');
 
 exports.register = async (req, res) => {
 
@@ -21,10 +21,13 @@ exports.register = async (req, res) => {
             newUser.roles= [role._id];
         }
         
-        const savedUser = await newUser.save()
+        const savedUser = await User.create({name, email, password, roles})
+
         res.status(201).json({
-            name: name,
-            email: email
+            _id: savedUser._id,
+            name: savedUser.name,
+            email: savedUser.email,
+            token: generateToken(savedUser._id)
         })
 
     } catch (error) {
@@ -39,16 +42,20 @@ exports.login = async (req, res) => {
 
         const userFound = await User.findOne({ email }).populate('roles');
     
-        if (!userFound) return res.status(400).json({message: 'User Not Found'})
+        if (!userFound) return res.status(400).json({message: 'User Not Found'});
     
-        const matchPassword = await User.comparePassword(password, userFound.password)
+        const matchPassword = await User.comparePassword(password, userFound.password);
     
-        if (!matchPassword) return res.status(401).json({token: null, message: 'Invalid Password'})
+        if (!matchPassword) return res.status(401).json({token: null, message: 'Invalid Password'});
     
-        const token = jwt.sign({id: userFound._id}, process.env.JWT_SECRET, {
-            expiresIn: 86400 // 24 Horass
+        const token = generateToken(userFound._id);
+
+        res.json({
+            _id: userFound._id,
+            name: userFound.name,
+            email: userFound.email,
+            token: generateToken(userFound._id)
         })
-        res.json({token})
     } 
     catch (error) {
         res.status(404).json(error)
