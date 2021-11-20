@@ -2,9 +2,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/img/Logo.png'
 import routes from '../../helpers/routes'
+import { useHistory } from 'react-router'
 
 export const Navbar = () => {
 
+    const history = useHistory();
 
     return (
         <>
@@ -24,6 +26,10 @@ export const Navbar = () => {
                                 </NavLink>
                                 <button
                                     className="btn btn-sm btn-outline-light ms-2"
+                                    onClick={() => { 
+                                        localStorage.removeItem('userInfo');
+                                        history.push(routes.home)
+                                        }}
                                 >
                                     Cerrar Sesión
                                 </button>
