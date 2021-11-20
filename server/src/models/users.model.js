@@ -19,6 +19,11 @@ const userSchema = new Schema({
             required: true,
             max: 128
         },
+        image: {
+            type: String,
+            required: true,
+            default: 'https://res.cloudinary.com/jfrvdata/image/upload/v1637429204/Users/defaultUser.png'
+        },
         roles: [{
             ref: "Role",
             type:  mongoose.Schema.Types.ObjectId
