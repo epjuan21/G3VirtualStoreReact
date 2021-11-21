@@ -1,9 +1,9 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import logo from '../../assets/img/Logo.png'
 import routes from '../../helpers/routes'
 import { useHistory } from 'react-router'
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/userActions'
 
 export const Navbar = () => {
@@ -26,41 +26,39 @@ export const Navbar = () => {
             <header>
                 <div className="bg-primary">
                     <div className="container">
-                        <nav className="navbar justify-content-end mx-2 py-3">
-                            <div className="d-flex">
+                        <nav className="navbar navbar-dark bg-primary navbar-expand-lg justify-content-end mx-2 py-3">
+                            <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
+
                                 {
-                                    !userInfo && (
-                                
-                                <NavLink className="btn btn-sm btn-primary" to={routes.auth.login}>
-                                    Iniciar Sesión
-                                </NavLink>
+                                    !userInfo && 
+                                    (
+                                        <li className="nav-item">
+                                            <NavLink className="btn btn-sm btn-primary" to={routes.auth.login}>Iniciar Sesión</NavLink>
+                                            <NavLink className="btn btn-sm btn-outline-light ms-2" to={routes.auth.register}>Registrarse</NavLink>
+                                        </li>
                                     )
                                 }
 
                                 {
-                                    !userInfo && (
-                             
-                                <NavLink
-                                    className="btn btn-sm btn-outline-light ms-2"
-                                    to={routes.auth.register}
-                                >
-                                    Registrarse
-                                </NavLink>
+                                    userInfo && 
+                                    (
+                                        <div className="dropdown text-end ms-2">
+                                            <a href="/#" className="d-block link-dark text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src={userInfo.image} alt="mdo" width="32" height="32" className="rounded-circle" />
+                                            </a>
+                                            <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                                <li><a className="dropdown-item" href="/#">New project...</a></li>
+                                                <li><a className="dropdown-item" href="/#">Settings</a></li>
+                                                <li><a className="dropdown-item" href="/#">Profile</a></li>
+                                                <li><hr className="dropdown-divider" /></li>
+                                                <li><button className="dropdown-item" onClick={logoutHandler}>Cerrar Sesión</button></li>
+                                            </ul>
+                                        </div>
                                     )
                                 }
 
-                                {
-                                    userInfo && (
-                               
-                                <button
-                                    className="btn btn-sm btn-outline-light ms-2"
-                                    onClick={ logoutHandler }
-                                >
-                                    Cerrar Sesión
-                                </button>
-                                    )
-                                }
-                            </div>
+                            </ul>
+
                         </nav>
                     </div>
                 </div>
@@ -108,32 +106,6 @@ export const Navbar = () => {
                                         Contacto
                                     </NavLink>
                                 </li>
-                            </ul>
-
-                            <ul className="navbar-nav">
-
-                                <li className="nav-item dropdown">
-
-                                    <a className="nav-link dropdown-toggle" href="/#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Admin
-                                    </a>
-
-                                    <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                        <li>
-                                            <NavLink className="dropdown-item" to={routes.users}>
-                                                Usuarios
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink className="dropdown-item" to={routes.account}>
-                                                Cuenta
-                                            </NavLink>
-                                        </li>
-                                    </ul>
-
-                                </li>
-
-
                             </ul>
 
                         </div>
