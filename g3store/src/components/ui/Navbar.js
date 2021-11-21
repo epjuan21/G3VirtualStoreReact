@@ -3,10 +3,23 @@ import { NavLink } from 'react-router-dom'
 import logo from '../../assets/img/Logo.png'
 import routes from '../../helpers/routes'
 import { useHistory } from 'react-router'
+import { useDispatch,useSelector } from 'react-redux'
+import { logout } from '../../actions/userActions'
 
 export const Navbar = () => {
 
     const history = useHistory();
+
+    const dispatch = useDispatch()
+
+    const userLogin = useSelector((state) => state.userLogin)
+
+    const { userInfo } = userLogin;
+
+    const logoutHandler = () => {
+        dispatch(logout())
+        history.push(routes.home)
+    }
 
     return (
         <>
@@ -15,24 +28,38 @@ export const Navbar = () => {
                     <div className="container">
                         <nav className="navbar justify-content-end mx-2 py-3">
                             <div className="d-flex">
+                                {
+                                    !userInfo && (
+                                
                                 <NavLink className="btn btn-sm btn-primary" to={routes.auth.login}>
                                     Iniciar Sesión
                                 </NavLink>
+                                    )
+                                }
+
+                                {
+                                    !userInfo && (
+                             
                                 <NavLink
                                     className="btn btn-sm btn-outline-light ms-2"
                                     to={routes.auth.register}
                                 >
                                     Registrarse
                                 </NavLink>
+                                    )
+                                }
+
+                                {
+                                    userInfo && (
+                               
                                 <button
                                     className="btn btn-sm btn-outline-light ms-2"
-                                    onClick={() => { 
-                                        localStorage.removeItem('userInfo');
-                                        history.push(routes.home)
-                                        }}
+                                    onClick={ logoutHandler }
                                 >
                                     Cerrar Sesión
                                 </button>
+                                    )
+                                }
                             </div>
                         </nav>
                     </div>

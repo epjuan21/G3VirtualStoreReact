@@ -1,73 +1,44 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom'
+import { register } from '../../actions/userActions';
+import routes from '../../helpers/routes';
 import { ErrorMessage } from '../ui/ErrorMessage';
 import { Loading } from '../ui/Loading';
 
 export const RegisterPage = () => {
 
-    const [state, setState] = useState({
-        name: '',
-        email: '',
-        image: '',
-        password: '',
-        confirmPassword: ''
-    })
-    const { name, email, image, password, confirmPassword } = state;
-
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [pic, setPic] = useState(
         "https://res.cloudinary.com/jfrvdata/image/upload/v1637429204/Users/defaultUser.png"
       );
-
     const [message, setMessage] = useState(null);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [picMessage, setPicMessage] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const userRegister = useSelector((state) => state.userRegister)
+    const { loading, error, userInfo} = userRegister;
+
+    const history = useHistory()
+
+    useEffect(() => {
+        if (userInfo) {
+            history.push(routes.home)
+        }
+    }, [history,userInfo])
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        if (password !== confirmPassword) {
-
-            setMessage("Las contraseñas no coinciden")
-
+        if(password !== confirmPassword){
+            setMessage('Las contraseñas no coinciden')
         } else {
-            
-            setMessage(null)
-
-            try {
-                const config = {
-                    baseURL: 'http://localhost:3000/api/v1',
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                }
-
-                setLoading(true)
-
-                const { data } = await axios.post('/auth/register', {
-                    name, email, image: pic, password
-                }, config)
-
-                setLoading(false)
-                setError(false)
-                setMessage(false)
-
-                localStorage.setItem('userInfo', JSON.stringify(data))
-
-            } catch (error) {
-                setError(error.response.data.message)
-                setLoading(false)
-            }
+            dispatch(register(name, pic, email, password))
         }
-    }
-
-    const handleInputChange = ({ target }) => {
-
-        setState({
-            ...state,
-            [target.name]: target.value
-        })
     }
 
     const postDetails = (pic) => {
@@ -89,7 +60,6 @@ export const RegisterPage = () => {
                 body: data,
             }).then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setPic(data.url.toString());
             }).catch((err) => {
                 console.log(err)
@@ -119,7 +89,7 @@ export const RegisterPage = () => {
                                     type="text"
                                     className="form-control"
                                     id="inputUser"
-                                    onChange={handleInputChange}
+                                    onChange={(e) => setName(e.target.value)}
                                     value={name}
                                 />
                             </div>
@@ -130,7 +100,7 @@ export const RegisterPage = () => {
                                     type="email"
                                     className="form-control"
                                     id="inputEmail"
-                                    onChange={handleInputChange}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     value={email}
                                 />
                             </div>
@@ -141,7 +111,7 @@ export const RegisterPage = () => {
                                     type="password"
                                     className="form-control"
                                     id="inputPassword"
-                                    onChange={handleInputChange}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     value={password}
                                 />
                             </div>
@@ -152,7 +122,7 @@ export const RegisterPage = () => {
                                     type="password"
                                     className="form-control"
                                     id="inputPasswordConfirm"
-                                    onChange={handleInputChange}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     value={confirmPassword}
                                 />
                             </div>

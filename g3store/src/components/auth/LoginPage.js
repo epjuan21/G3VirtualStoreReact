@@ -1,54 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import routes from '../../helpers/routes'
-import axios from 'axios'
 import { Loading } from '../ui/Loading'
 import { ErrorMessage } from '../ui/ErrorMessage'
+import { login } from '../../actions/userActions'
 
-export const LoginPage = () => {
+export const LoginPage = ({history}) => {
 
-    const [state, setState] = useState({
-        email: '',
-        password: '',
-    })
-    const { email, password } = state;
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector((state) => state.userLogin)
+    const { loading, error, userInfo } = userLogin;
+
+    useEffect(() => {
+        if (userInfo) {
+            history.push('/')
+        }
+    }, [history,userInfo])
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        try {
-            const config = {
-                baseURL: 'http://localhost:3000/api/v1',
-                headers: {
-                    "Content-type": "application/json"
-                }
-            }
-
-            setLoading(true)
-
-            const { data } = await axios.post('/auth/login', {
-                email, password
-            }, config)
-
-            localStorage.setItem('userInfo', JSON.stringify(data))
-
-            setLoading(false)
-
-        } catch (error) {
-            setError(error.response.data.message)
-            setLoading(false)
-        }
-    }
-
-    const handleInputChange = ({ target }) => {
-
-        setState({
-            ...state,
-            [target.name]: target.value
-        })
+        dispatch(login(email, password))
     }
 
     return (
@@ -70,8 +46,8 @@ export const LoginPage = () => {
                                     type="email"
                                     className="form-control"
                                     id="inputUser"
-                                    onChange={ handleInputChange }
-                                    value={state.email}
+                                    onChange={ (e) => setEmail(e.target.value) }
+                                    value={email}
                                 />
                             </div>
                             <div className="col mb-3">
@@ -81,8 +57,8 @@ export const LoginPage = () => {
                                     type="password"
                                     className="form-control"
                                     id="inputPassword"
-                                    onChange={ handleInputChange }
-                                    value={state.password}
+                                    onChange={ (e) => setPassword(e.target.value) }
+                                    value={password}
                                 />
                             </div>
                             <div className="col-12">
