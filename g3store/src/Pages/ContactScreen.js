@@ -133,26 +133,26 @@ export const ContactScreen = () => {
 
                             <div className="row g-3 mb-3">
                                 <div className="col">
-                                    <label forHtml="name" className="form-label">Nombres</label>
+                                    <label forhtml="name" className="form-label">Nombres</label>
                                     <input type="text" className="form-control" id="name" />
                                 </div>
                                 <div className="col">
-                                    <label forHtml="surname" className="form-label">Apellidos</label>
+                                    <label forhtml="surname" className="form-label">Apellidos</label>
                                     <input type="text" className="form-control" id="surname" />
                                 </div>
                                 <div className="col">
-                                    <label forHtml="mail" className="form-label">Correo</label>
+                                    <label forhtml="mail" className="form-label">Correo</label>
                                     <input type="email" className="form-control" id="mail" />
                                 </div>
                             </div>
 
                             <div className="row g-3 mb-3">
                                 <div className="col">
-                                    <label forHtml="inputAddress2" className="form-label">Dirección</label>
+                                    <label forhtml="inputAddress2" className="form-label">Dirección</label>
                                     <input type="text" className="form-control" id="inputAddress2" />
                                 </div>
                                 <div className="col">
-                                    <label forHtml="tel" className="form-label">Teléfono</label>
+                                    <label forhtml="tel" className="form-label">Teléfono</label>
                                     <input type="text" className="form-control" id="tel" />
                                 </div>
                             </div>
@@ -168,7 +168,7 @@ export const ContactScreen = () => {
                                             id="inlineCheckbox1"
                                             value="option1"
                                         />
-                                        <label className="form-check-label" forHtml="inlineCheckbox1"
+                                        <label className="form-check-label" forhtml="inlineCheckbox1"
                                         >Gestión de Transporte</label>
                                     </div>
                                     <div className="form-check form-check-inline">
@@ -178,7 +178,7 @@ export const ContactScreen = () => {
                                             id="inlineCheckbox2"
                                             value="option2"
                                         />
-                                        <label className="form-check-label" forHtml="inlineCheckbox2"
+                                        <label className="form-check-label" forhtml="inlineCheckbox2"
                                         >Gestión de Peajes</label>
                                     </div>
                                     <div className="form-check form-check-inline">
@@ -188,7 +188,7 @@ export const ContactScreen = () => {
                                             id="inlineCheckbox3"
                                             value="option3"
                                         />
-                                        <label className="form-check-label" forHtml="inlineCheckbox3"
+                                        <label className="form-check-label" forhtml="inlineCheckbox3"
                                         >Software Factory</label>
                                     </div>
                                     <div className="form-check form-check-inline">
@@ -198,7 +198,7 @@ export const ContactScreen = () => {
                                             id="inlineCheckbox4"
                                             value="option4"
                                         />
-                                        <label className="form-check-label" forHtml="inlineCheckbox4"
+                                        <label className="form-check-label" forhtml="inlineCheckbox4"
                                         >Todos</label>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@ export const ContactScreen = () => {
                                             type="checkbox"
                                             id="gridCheck"
                                         />
-                                        <label className="form-check-label" forHtml="gridCheck">
+                                        <label className="form-check-label" forhtml="gridCheck">
                                             En cumplimiento de la Constitución Política Nacional, Ley
                                             1581 de 2012 y el decreto 1377 de 2013, es responsable del
                                             tratamiento de sus datos personales. ¿Autoriza a G3 Virtual
