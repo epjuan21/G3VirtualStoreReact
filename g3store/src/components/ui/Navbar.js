@@ -47,6 +47,7 @@ export const Navbar = () => {
                                                 <img src={userInfo.image} alt="mdo" width="32" height="32" className="rounded-circle" />
                                             </a>
                                             <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                                <li><h6 className="dropdown-header">{userInfo.name}</h6></li>
                                                 <li><a className="dropdown-item" href="/#">New project...</a></li>
                                                 <li><a className="dropdown-item" href="/#">Settings</a></li>
                                                 <li><a className="dropdown-item" href="/#">Profile</a></li>
