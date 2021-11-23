@@ -1,5 +1,6 @@
 const User = require('../models/users.model');
 const Role = require('../models/roles.model');
+const generateToken = require('../lib/generateToken');
 
 // Get Users
 exports.getUsers = async (req, res) => {
@@ -51,7 +52,13 @@ exports.updateUser = async(req, res) => {
         const user = await User.findByIdAndUpdate(req.params.id, {
             name, email, password, image
         }, { new: true });
-        res.status(200).json(user)
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            token: generateToken(user._id)
+        })
     } catch (error) {
         res.status(404).json({ message: error }) 
     }
