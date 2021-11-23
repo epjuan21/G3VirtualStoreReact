@@ -4,8 +4,8 @@ const userController = require('../controllers/users.controller');
 const authJwt = require('../middlewares/authJwt');
 const verifySignUp = require('../middlewares/verifySignUp');
 
-
-router.get('/', userController.getUsers);                                                                           // Get Users
-router.post('/', [authJwt.verifyToken, authJwt.isAdmin, verifySignUp.checkRolesExisted], userController.addUser)    // Add User
+router.get('/', userController.getUsers);                                                                               // Get Users
+router.post('/', [authJwt.verifyToken, authJwt.isAdmin, verifySignUp.checkRolesExisted], userController.addUser)        // Add User
+router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin, verifySignUp.checkRolesExisted], userController.updateUser)    // Update User
 
 module.exports = router;
