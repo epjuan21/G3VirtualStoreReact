@@ -7,7 +7,6 @@ import { HomePage } from "../Pages/HomePage";
 import { GestionPeajes } from "../Pages/GestionPeajes";
 import { GestionTransporte } from "../Pages/GestionTransporte";
 import { SoftwareFactory } from "../Pages/SoftwareFactory";
-import { AccountPage } from "../Pages/AccountPage";
 import { NotFoundPage } from "../Pages/NotFoundPage";
 import routes from "../helpers/routes";
 import { Navbar } from "../components/ui/Navbar";
@@ -15,6 +14,7 @@ import { Footer } from "../components/ui/Footer";
 import { ProductsPage } from "../Pages/ProductsPage";
 import { ProductCreate } from "../Pages/ProductCreate";
 import { Product } from "../Pages/Product";
+import { ProfilePage } from "../Pages/Profile/ProfilePage";
 
 export const AppRouter = () => {
     return (
@@ -32,7 +32,7 @@ export const AppRouter = () => {
                     <Route exact path={routes.product.list} component={ProductsPage} />
                     <Route exact path={routes.product.create} component={ProductCreate} />
                     <Route exact path='/admin/edit/product/:id' component={Product} />
-                    <Route path={routes.account} component={AccountPage} />
+                    <Route path={routes.profile} component={ProfilePage} />
                     <Route path="*" component={NotFoundPage} />
                 </Switch>
                 <Footer />
