@@ -52,7 +52,6 @@ export const ProductsPage = ({history}) => {
                 {errorDelete && ( <ErrorMessage  alertType="danger">{errorDelete}</ErrorMessage> )}
                 {loadingDelete && <Loading/>}
 
-
                 <div className="d-flex justify-content-between mb-3">
                     <div className="col-6">
                         <NavLink className="btn btn-success" to={routes.product.create}>Crear Producto</NavLink>
@@ -60,7 +59,6 @@ export const ProductsPage = ({history}) => {
                     <div className="col-5">
                         <input onChange={(e) => setSearch(e.target.value)} className="form-control" type="text" placeholder="Buscar" />
                     </div>
-
                 </div>
 
                 <table className="table table-responsive align-middle table-sm">
@@ -92,10 +90,7 @@ export const ProductsPage = ({history}) => {
                     ))
                     }  
                     </tbody>
-            
                 </table>
-
-
             </div>
         </>
     )
