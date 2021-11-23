@@ -5,7 +5,7 @@ const routes = {
     gestionpeajes: '/gestion-peajes',
     gestiontransporte: '/gestion-transporte',
     softwarefactory: '/software-factory',
-    account: '/account',
+    profile: '/profile',
     users: '/admin/users',
     product: {
         list: '/admin/list/products',
