@@ -43,3 +43,16 @@ exports.addUser = async (req, res) => {
         res.status(404).json({ message: error })
     }
 }
+
+// Update User
+exports.updateUser = async(req, res) => {
+    try {
+        const { name, email, password, image } = req.body;
+        const user = await User.findByIdAndUpdate(req.params.id, {
+            name, email, password, image
+        }, { new: true });
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(404).json({ message: error }) 
+    }
+}
