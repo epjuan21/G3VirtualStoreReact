@@ -50,7 +50,7 @@ export const Navbar = () => {
                                                 <li><h6 className="dropdown-header">{userInfo.name}</h6></li>
                                                 <li><NavLink className="dropdown-item" to={routes.product.list}>Productos</NavLink></li>
                                                 <li><NavLink className="dropdown-item" to={routes.product.create}>Crear Producto</NavLink></li>
-                                                <li><a className="dropdown-item" href="/#">Profile</a></li>
+                                                <li><NavLink className="dropdown-item" to={routes.profile}>Profile</NavLink></li>
                                                 <li><hr className="dropdown-divider" /></li>
                                                 <li><button className="dropdown-item" onClick={logoutHandler}>Cerrar Sesión</button></li>
                                             </ul>
