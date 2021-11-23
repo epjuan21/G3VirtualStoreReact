@@ -7,6 +7,10 @@ const routes = {
     softwarefactory: '/software-factory',
     account: '/account',
     users: '/admin/users',
+    product: {
+        list: '/admin/list/products',
+        create: '/admin/create/product',
+    },
     auth: {
         login: '/auth/login',
         register: '/auth/register'
