@@ -1,5 +1,4 @@
 const User = require('../models/users.model');
-const ROLES = require('../models/roles.model');
 
 exports.checkRolesExisted = async (req, res, next) => {
 
