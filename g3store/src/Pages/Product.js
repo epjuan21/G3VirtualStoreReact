@@ -12,6 +12,7 @@ export const Product = ({match, history}) => {
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("")
     const [imageUrl, setImageUrl] = useState("https://res.cloudinary.com/jfrvdata/image/upload/v1637429204/Users/defaultUser.png")
+    const [picMessage, setPicMessage] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -46,6 +47,34 @@ export const Product = ({match, history}) => {
         setImageUrl("");
     }
 
+    const postDetails = (pic) => {
+
+        const image = pic;
+
+        if (image === undefined ) {
+            return setPicMessage('Por favor seleccione una Imagen')
+        }
+        setPicMessage(null)
+
+        if(image.type === 'image/jpeg' || image.type === 'image/png') {
+            const data = new FormData();
+            data.append('file', image)
+            data.append('upload_preset', 'g3store')
+            data.append('cloud_name', 'jfrvdata ')
+            fetch('https://api.cloudinary.com/v1_1/jfrvdata/upload', {
+                method: 'post',
+                body: data,
+            }).then((res) => res.json())
+            .then((data) => {
+                setImageUrl(data.url.toString());
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            return setPicMessage('Por favor seleccione una Imagen') 
+        }
+    }
+
     const updateHandler = (e) => {
         e.preventDefault();
         if (!name || !price || !description || !imageUrl) return
@@ -63,57 +92,69 @@ export const Product = ({match, history}) => {
             { loading && <Loading/> }
 
             {errorDelete && ( <ErrorMessage  alertType="danger">{errorDelete}</ErrorMessage> )}
+            {successDelete && ( <ErrorMessage  alertType="success">Eliminado Correctamente</ErrorMessage> )}
+
             {loadingDelete && <Loading/>}
 
-            <form onSubmit={updateHandler}>
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Nombre Producto</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+            <div className="card">
+                <div className="d-flex my-2 mx-2">
+                    <img src={imageUrl} alt={name} style={{ width: 150 }} />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="precio" className="form-label">Precio</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="precio"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
+                <div className="card-body">
+                <h5 className="card-title mb-4">{name}</h5>
+                    <form onSubmit={updateHandler}>
+                        <div className="mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="precio" className="form-label">Precio</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="precio"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="descripcion " className="form-label">Descripcion</label>
+                            <textarea
+                                className="form-control"
+                                id="descripcion"
+                                rows="3"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            >
+                            </textarea>
+                        </div>
+
+                        {
+                            picMessage && ( <ErrorMessage alertType="danger" >{picMessage}</ErrorMessage> )
+                        }
+
+                        <div className="mb-3">
+                            <label forhtml="formFile" className="form-label">Seleccione una imagen</label>
+                            <input
+                                name="image"
+                                className="form-control"
+                                type="file"
+                                id="formFile"
+                                onChange={ (e) => postDetails(e.target.files[0]) }
+                            />
+                        </div>
+
+                        <button type="submit" className="btn btn-primary">Actualizar Producto</button>
+                        <button onClick={() => deleteHandler(match.params.id)} className="btn btn-outline-danger ms-2">Eliminar Producto</button>
+                    </form>
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="descripcion " className="form-label">Descripcion</label>
-                    <textarea
-                        className="form-control"
-                        id="descripcion"
-                        rows="3"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    >
-                    </textarea>
-                </div>
-
-                <div className="mb-3">
-                    <label forhtml="formFile" className="form-label">Seleccione una imagen</label>
-                    <input
-                        name="image"
-                        className="form-control"
-                        type="file"
-                        id="formFile"
-
-                    />
-                </div>
-
-                <button type="submit" className="btn btn-primary">Actualizar Producto</button>
-                <button onClick={resetHandler} className="btn btn-outline-warning ms-2">Resetear Formulario</button>
-                <button onClick={() => deleteHandler(match.params.id)} className="btn btn-outline-danger ms-2">Eliminar Nota</button>
-            </form>
+            </div>
 
 
         </div>
