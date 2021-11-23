@@ -12,6 +12,9 @@ import { NotFoundPage } from "../Pages/NotFoundPage";
 import routes from "../helpers/routes";
 import { Navbar } from "../components/ui/Navbar";
 import { Footer } from "../components/ui/Footer";
+import { ProductsPage } from "../Pages/ProductsPage";
+import { ProductCreate } from "../Pages/ProductCreate";
+import { Product } from "../Pages/Product";
 
 export const AppRouter = () => {
     return (
@@ -26,7 +29,10 @@ export const AppRouter = () => {
                     <Route path={routes.gestionpeajes} component={GestionPeajes} />
                     <Route path={routes.gestiontransporte} component={GestionTransporte} />
                     <Route path={routes.softwarefactory} component={SoftwareFactory} />
-                    <Route exact path={routes.account} component={AccountPage} />
+                    <Route exact path={routes.product.list} component={ProductsPage} />
+                    <Route exact path={routes.product.create} component={ProductCreate} />
+                    <Route exact path='/admin/edit/product/:id' component={Product} />
+                    <Route path={routes.account} component={AccountPage} />
                     <Route path="*" component={NotFoundPage} />
                 </Switch>
                 <Footer />
