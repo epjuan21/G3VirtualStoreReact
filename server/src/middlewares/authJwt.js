@@ -17,8 +17,9 @@ exports.verifyToken = async  (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
     
-    const user = await Users.findById(req.userId)
-    console.log(user.roles);
+    const token = req.headers["x-access-token"]
+    const { id } = jwt.verify(token, process.env.JWT_SECRET)
+    const user = await Users.findById(id);
     const roles = await Role.find({_id: {$in: user.roles}})
     
     for(let i = 0; i < roles.length; i++)
