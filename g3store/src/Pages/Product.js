@@ -1,17 +1,19 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { listCategories } from '../actions/categoriesActions';
 import { deleteProductAction, updateProductAction } from '../actions/productsActions';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { Loading } from '../components/ui/Loading';
 import routes from '../helpers/routes';
 
-export const Product = ({match, history}) => {
+export const Product = ({ match, history }) => {
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("")
     const [imageUrl, setImageUrl] = useState("https://res.cloudinary.com/jfrvdata/image/upload/v1637429204/Users/defaultUser.png")
+    const [cat, setCat] = useState('');
     const [picMessage, setPicMessage] = useState(null);
 
     const dispatch = useDispatch();
@@ -22,8 +24,11 @@ export const Product = ({match, history}) => {
     const productDelete = useSelector(state => state.productDelete)
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
 
+    const categoryList = useSelector((state) => state.categoryList)
+    const { categories } = categoryList;
+
     const deleteHandler = (id) => {
-        if (window.confirm("Esta seguro?")){
+        if (window.confirm("Esta seguro?")) {
             dispatch(deleteProductAction(id))
         }
     }
@@ -31,14 +36,16 @@ export const Product = ({match, history}) => {
     useEffect(() => {
         const fetching = async () => {
             const config = { baseURL: 'http://localhost:3000/api/v1' }
-            const { data } = await axios.get(`/products/${match.params.id}`,config)
+            const { data } = await axios.get(`/products/${match.params.id}`, config)
             setName(data.name);
             setPrice(data.price);
             setDescription(data.description);
             setImageUrl(data.imageUrl);
+            setCat(data.category_id)
         }
+        dispatch(listCategories())
         fetching();
-    }, [match.params.id])
+    }, [match.params.id, dispatch])
 
     const resetHandler = () => {
         setName("");
@@ -51,12 +58,12 @@ export const Product = ({match, history}) => {
 
         const image = pic;
 
-        if (image === undefined ) {
+        if (image === undefined) {
             return setPicMessage('Por favor seleccione una Imagen')
         }
         setPicMessage(null)
 
-        if(image.type === 'image/jpeg' || image.type === 'image/png') {
+        if (image.type === 'image/jpeg' || image.type === 'image/png') {
             const data = new FormData();
             data.append('file', image)
             data.append('upload_preset', 'g3store')
@@ -65,20 +72,24 @@ export const Product = ({match, history}) => {
                 method: 'post',
                 body: data,
             }).then((res) => res.json())
-            .then((data) => {
-                setImageUrl(data.url.toString());
-            }).catch((err) => {
-                console.log(err)
-            })
+                .then((data) => {
+                    setImageUrl(data.url.toString());
+                }).catch((err) => {
+                    console.log(err)
+                })
         } else {
-            return setPicMessage('Por favor seleccione una Imagen') 
+            return setPicMessage('Por favor seleccione una Imagen')
         }
     }
+
+    const handleCategoryChange = (e) => {
+        setCat(e.target.value)
+      }
 
     const updateHandler = (e) => {
         e.preventDefault();
         if (!name || !price || !description || !imageUrl) return
-        dispatch(updateProductAction(match.params.id, name, price, description, imageUrl));
+        dispatch(updateProductAction(match.params.id, name, price, description, imageUrl, cat));
 
         resetHandler();
         history.push(routes.product.list)
@@ -89,19 +100,19 @@ export const Product = ({match, history}) => {
             <h1>Editar Producto</h1>
 
             {error && <ErrorMessage alertType="danger" > {error} </ErrorMessage>}
-            { loading && <Loading/> }
+            {loading && <Loading />}
 
-            {errorDelete && ( <ErrorMessage  alertType="danger">{errorDelete}</ErrorMessage> )}
-            {successDelete && ( <ErrorMessage  alertType="success">Eliminado Correctamente</ErrorMessage> )}
+            {errorDelete && (<ErrorMessage alertType="danger">{errorDelete}</ErrorMessage>)}
+            {successDelete && (<ErrorMessage alertType="success">Eliminado Correctamente</ErrorMessage>)}
 
-            {loadingDelete && <Loading/>}
+            {loadingDelete && <Loading />}
 
             <div className="card">
                 <div className="d-flex my-2 mx-2">
                     <img src={imageUrl} alt={name} style={{ width: 150 }} />
                 </div>
                 <div className="card-body">
-                <h5 className="card-title mb-4">{name}</h5>
+                    <h5 className="card-title mb-4">{name}</h5>
                     <form onSubmit={updateHandler}>
                         <div className="mb-3">
                             <input
@@ -136,7 +147,7 @@ export const Product = ({match, history}) => {
                         </div>
 
                         {
-                            picMessage && ( <ErrorMessage alertType="danger" >{picMessage}</ErrorMessage> )
+                            picMessage && (<ErrorMessage alertType="danger" >{picMessage}</ErrorMessage>)
                         }
 
                         <div className="mb-3">
@@ -146,8 +157,20 @@ export const Product = ({match, history}) => {
                                 className="form-control"
                                 type="file"
                                 id="formFile"
-                                onChange={ (e) => postDetails(e.target.files[0]) }
+                                onChange={(e) => postDetails(e.target.files[0])}
                             />
+                        </div>
+
+                        <div className="mb-3">
+                            <select value={cat} onChange={handleCategoryChange} className="form-select" aria-label="Default select example">
+                                <option value={null}> -- Seleccione una Categoria -- </option>
+                                {categories?.map((category) => 
+                                    <option 
+                                        key={category.name}
+                                        value={category._id}>
+                                        {category.name}
+                                    </option>)}
+                            </select>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar Producto</button>

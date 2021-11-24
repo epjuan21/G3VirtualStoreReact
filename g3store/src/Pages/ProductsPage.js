@@ -15,8 +15,6 @@ export const ProductsPage = ({ history }) => {
     const productList = useSelector((state) => state.productList)
     const { loading, products, error } = productList;
 
-    // const history = useHistory();
-
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 

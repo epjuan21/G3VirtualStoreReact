@@ -36,7 +36,7 @@ export const listProducts = () => async (dispatch, getState) => {
 	}
 };
 
-export const createProductAction = (name, price, description, imageUrl) => async (dispatch, getState) => {
+export const createProductAction = (name, price, description, imageUrl, category) => async (dispatch, getState) => {
 	try {
 		dispatch({
 			type: PRODUCTS_CREATE_REQUEST,
@@ -56,7 +56,7 @@ export const createProductAction = (name, price, description, imageUrl) => async
 
 		const { data } = await axios.post(
 			`/products`,
-			{ name, price, description, imageUrl },
+			{ name, price, description, imageUrl, category_id: category },
 			config
 		);
 
@@ -74,7 +74,7 @@ export const createProductAction = (name, price, description, imageUrl) => async
 	}
 };
 
-export const updateProductAction = (id, name, price, description, imageUrl) => async (dispatch, getState) => {
+export const updateProductAction = (id, name, price, description, imageUrl, category) => async (dispatch, getState) => {
 	try {
 		dispatch({
 			type: PRODUCTS_UPDATE_REQUEST,
@@ -94,7 +94,7 @@ export const updateProductAction = (id, name, price, description, imageUrl) => a
 
 		const { data } = await axios.put(
 			`/products/${id}`,
-			{ name, price, description, imageUrl },
+			{ name, price, description, imageUrl, category_id: category },
 			config
 		);
 
