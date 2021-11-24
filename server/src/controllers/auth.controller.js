@@ -49,10 +49,10 @@ exports.login = async (req, res) => {
     
         if (!matchPassword) return res.status(401).json({token: null, message: 'Invalid Password'});
 
-        const roles = []
+        const authorities = []
 
         for (let i = 0; i < userFound.roles.length; i++) {
-            const roles = roles.push(userFound.roles[i].name.toUpperCase());
+            authorities.push(userFound.roles[i].name);
         }
 
         res.json({
@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
             name: userFound.name,
             email: userFound.email,
             image: userFound.image,
-            roles: roles,
+            roles: authorities,
             token: generateToken(userFound._id),
         })
     } 
