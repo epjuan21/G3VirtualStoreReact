@@ -6,7 +6,7 @@ import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { Loading } from '../components/ui/Loading';
 import routes from '../helpers/routes';
 
-export const ProductsPage = ({history}) => {
+export const ProductsPage = ({ history }) => {
 
     const [search, setSearch] = useState("")
 
@@ -29,28 +29,28 @@ export const ProductsPage = ({history}) => {
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
 
     const deleteHandler = (id) => {
-        if (window.confirm("Esta seguro?")){
+        if (window.confirm("Esta seguro?")) {
             dispatch(deleteProductAction(id))
         }
     }
 
     useEffect(() => {
         dispatch(listProducts())
-        if(!userInfo){
+        if (!userInfo) {
             history.push(routes.home)
         }
-    },[history,dispatch,successCreate,userInfo,successUpdate,successDelete])
+    }, [history, dispatch, successCreate, userInfo, successUpdate, successDelete])
 
     return (
         <>
             <div className="container">
                 <h1>Productos</h1>
 
-                { error && <ErrorMessage alertType="danger">{ error }</ErrorMessage> }
-                { loading && <Loading/> }
+                {error && <ErrorMessage alertType="danger">{error}</ErrorMessage>}
+                {loading && <Loading />}
 
-                {errorDelete && ( <ErrorMessage  alertType="danger">{errorDelete}</ErrorMessage> )}
-                {loadingDelete && <Loading/>}
+                {errorDelete && (<ErrorMessage alertType="danger">{errorDelete}</ErrorMessage>)}
+                {loadingDelete && <Loading />}
 
                 <div className="d-flex justify-content-between mb-3">
                     <div className="col-6">
@@ -72,23 +72,23 @@ export const ProductsPage = ({history}) => {
                         </tr>
                     </thead>
                     <tbody>
-                    { products?.reverse().filter(filteredProduct=>(
-                        filteredProduct.name.toLowerCase().includes(search.toLowerCase())
-                    )).map((product) => (                    
-                        <tr key={product._id}>
-                            <td><img className="img-thumbnail rounded-circle align-middle" style={{width: 50}} src={product.imageUrl} alt={product.name} /></td>
-                            <td className="fw-light col-2">{ product.name }</td>
-                            <td className="fw-light col-1">{ product.price }</td>
-                            <td className="fw-light col-6">{ product.description }</td>
-                            <td className="align-middle col-1">
-                            <div className="d-flex d-grid col-12 mx-auto">
-                                <NavLink className="btn btn-primary btn-sm" to={`/admin/edit/product/${product._id}`}>Editar</NavLink>
-                                <button className="btn btn-outline-danger btn-sm mx-2" onClick={() => deleteHandler(product._id)}>Eliminar</button>
-                            </div>
-                            </td>
-                        </tr>
-                    ))
-                    }  
+                        {products?.reverse().filter(filteredProduct => (
+                            filteredProduct.name.toLowerCase().includes(search.toLowerCase())
+                        )).map((product) => (
+                            <tr key={product._id}>
+                                <td><img className="img-thumbnail rounded-circle align-middle" style={{ width: 50 }} src={product.imageUrl} alt={product.name} /></td>
+                                <td className="fw-light col-2">{product.name}</td>
+                                <td className="fw-light col-1">{product.price}</td>
+                                <td className="fw-light col-6">{product.description}</td>
+                                <td className="align-middle col-1">
+                                    <div className="d-flex d-grid col-12 mx-auto">
+                                        <NavLink className="btn btn-primary btn-sm" to={`/admin/edit/product/${product._id}`}>Editar</NavLink>
+                                        <button className="btn btn-outline-danger btn-sm mx-2" onClick={() => deleteHandler(product._id)}>Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                        }
                     </tbody>
                 </table>
             </div>
