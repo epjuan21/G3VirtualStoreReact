@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 const roleSchema = new Schema({
     name: {
         type: String,
-        required: true,
-        unique: true,
+        required: [true, "The role name is required"],
+        unique: [true, "The role name must be unique"],
         max: 100
     }
 },
