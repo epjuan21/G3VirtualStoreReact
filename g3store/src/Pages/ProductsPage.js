@@ -5,6 +5,7 @@ import { deleteProductAction, listProducts } from '../actions/productsActions';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { Loading } from '../components/ui/Loading';
 import routes from '../helpers/routes';
+import { SingleProduct } from './Products/SingleProduct';
 
 export const ProductsPage = ({ history }) => {
 
@@ -75,18 +76,15 @@ export const ProductsPage = ({ history }) => {
                         {products?.reverse().filter(filteredProduct => (
                             filteredProduct.name.toLowerCase().includes(search.toLowerCase())
                         )).map((product) => (
-                            <tr key={product._id}>
-                                <td><img className="img-thumbnail rounded-circle align-middle" style={{ width: 50 }} src={product.imageUrl} alt={product.name} /></td>
-                                <td className="fw-light col-2">{product.name}</td>
-                                <td className="fw-light col-1">{product.price}</td>
-                                <td className="fw-light col-6">{product.description}</td>
-                                <td className="align-middle col-1">
-                                    <div className="d-flex d-grid col-12 mx-auto">
-                                        <NavLink className="btn btn-primary btn-sm" to={`/admin/edit/product/${product._id}`}>Editar</NavLink>
-                                        <button className="btn btn-outline-danger btn-sm mx-2" onClick={() => deleteHandler(product._id)}>Eliminar</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <SingleProduct
+                                key={product._id}
+                                image={product.imageUrl} 
+                                name={product.name}
+                                price={product.price}
+                                description={product.description}
+                                _id={product._id}
+                                onClick={(e) => { deleteHandler(product._id) }}
+                            />
                         ))
                         }
                     </tbody>
