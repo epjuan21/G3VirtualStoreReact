@@ -18,17 +18,17 @@ exports.register = async (req, res) => {
             newUser.roles = foundRoles.map(role => role._id)
         } else {
             const role = await Role.findOne({name: 'user'})
-            newUser.roles= [role._id];
+            newUser.roles = [role._id];
         }
+        const userSaved = await newUser.save();
         
-        const savedUser = await User.create({name, email, password, image, roles})
-
         res.status(201).json({
-            _id: savedUser._id,
-            name: savedUser.name,
-            email: savedUser.email,
-            image: savedUser.image,
-            token: generateToken(savedUser._id)
+            _id: userSaved._id,
+            name: userSaved.name,
+            email: userSaved.email,
+            image: userSaved.image,
+            roles: userSaved.roles,
+            token: generateToken(userSaved._id)
         })
 
     } catch (error) {
@@ -48,15 +48,20 @@ exports.login = async (req, res) => {
         const matchPassword = await User.comparePassword(password, userFound.password);
     
         if (!matchPassword) return res.status(401).json({token: null, message: 'Invalid Password'});
-    
-        const token = generateToken(userFound._id);
+
+        const roles = []
+
+        for (let i = 0; i < userFound.roles.length; i++) {
+            const roles = roles.push(userFound.roles[i].name.toUpperCase());
+        }
 
         res.json({
             _id: userFound._id,
             name: userFound.name,
             email: userFound.email,
             image: userFound.image,
-            token: generateToken(userFound._id)
+            roles: roles,
+            token: generateToken(userFound._id),
         })
     } 
     catch (error) {
