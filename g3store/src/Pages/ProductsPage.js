@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { deleteProductAction, listProducts } from '../actions/productsActions';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { Loading } from '../components/ui/Loading';
+import Pagination from '../components/ui/Pagination';
 import routes from '../helpers/routes';
 import { SingleProduct } from './Products/SingleProduct';
 
@@ -14,6 +15,12 @@ export const ProductsPage = ({ history }) => {
     const dispatch = useDispatch();
     const productList = useSelector((state) => state.productList)
     const { loading, products, error } = productList;
+
+    const [showPerPage, setShowPerPage] = useState(4)
+    const [pagination, setPagination] = useState({
+        start: 0,
+        end: showPerPage
+    })
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -39,6 +46,10 @@ export const ProductsPage = ({ history }) => {
             history.push(routes.home)
         }
     }, [history, dispatch, successCreate, userInfo, successUpdate, successDelete])
+
+    const onPaginationChange = (start, end) => {
+        setPagination({start:start, end: end})
+    }
 
     return (
         <>
@@ -71,7 +82,7 @@ export const ProductsPage = ({ history }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products?.reverse().filter(filteredProduct => (
+                        {products?.reverse().slice(pagination.start,pagination.end).filter(filteredProduct => (
                             filteredProduct.name.toLowerCase().includes(search.toLowerCase())
                         )).map((product) => (
                             <SingleProduct
@@ -87,6 +98,11 @@ export const ProductsPage = ({ history }) => {
                         }
                     </tbody>
                 </table>
+                <Pagination 
+                showPerPage={showPerPage} 
+                onPaginationChange={onPaginationChange} 
+                total={products?.reverse().length}
+                />
             </div>
         </>
     )
