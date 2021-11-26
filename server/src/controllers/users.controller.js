@@ -12,6 +12,16 @@ exports.getUsers = async (req, res) => {
     }
 }
 
+// Get User By id
+exports.getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(404).json({ message: error })
+    }
+}
+
 // Add User
 exports.addUser = async (req, res) => {
     try {
@@ -49,16 +59,28 @@ exports.addUser = async (req, res) => {
 exports.updateUser = async(req, res) => {
     try {
         const { name, email, password, image } = req.body;
-        const user = await User.findByIdAndUpdate(req.params.id, {
-            name, email, password, image
-        }, { new: true });
+
+        const user = await User.findById(req.params.id);
+        
+        if (user) {
+            user.name = name || user.name,
+            user.email = email || user.email,
+            user.image = image || user.image
+        }
+
+        if(password) {
+            user.password = password
+        }
+
+        const updatedUser = await user.save();
+
         res.status(200).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            token: generateToken(user._id)
-        })
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                image: updatedUser.image,
+                token: generateToken(updatedUser._id)
+            })
     } catch (error) {
         res.status(404).json({ message: error }) 
     }
