@@ -101,16 +101,16 @@ export const ProfilePage = ({match}) => {
                             autoComplete='off'
                         />
                         <input 
-                            type="password" 
-                            className="form-control"
+                            type="password"
                             autoComplete="off"
+                            className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <input 
-                            type="password" 
-                            className="form-control"
+                            type="password"
                             autoComplete="off"
+                            className="form-control"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
