@@ -86,7 +86,7 @@ export const updateProfile = (id, name, email, password, image) => async (dispat
 			},
 		};
 
-		const { data } = await axios.put(`/users/${id}`, { name, email, password, image },	config);
+		const { data } = await axios.post(`/users/${id}`, { name, email, password, image },	config);
 		dispatch({type: USER_UPDATE_SUCCESS, payload: data})
 		dispatch({type: USER_LOGIN_SUCCESS, payload: data})
 
