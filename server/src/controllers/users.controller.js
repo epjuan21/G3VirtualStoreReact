@@ -5,7 +5,7 @@ const generateToken = require('../lib/generateToken');
 // Get Users
 exports.getUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find({},['name','email','image','roles']);
         res.status(200).json(users)
     } catch (error) {
         res.status(404).json({ message: error })
