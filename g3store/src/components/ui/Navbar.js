@@ -44,7 +44,7 @@ export const Navbar = () => {
                                     (
                                         <div className="dropdown text-end ms-2">
                                             <a href="/#" className="d-block link-dark text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <img src={userInfo.image} alt="mdo" width="32" height="32" className="rounded-circle" />
+                                                <img src={userInfo.image} alt="mdo" width="32" height="32" className="rounded-circle img-user-profile-nav" />
                                             </a>
                                             <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                                 <li><h6 className="dropdown-header">{userInfo.name}</h6></li>
